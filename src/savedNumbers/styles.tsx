@@ -18,6 +18,7 @@ export const SavedNumbersContainer = styled.div`
     li {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px 15px;
       border-top: 1px solid #eee;
 

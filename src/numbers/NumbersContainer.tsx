@@ -22,6 +22,7 @@ import {
   setStorage,
 } from "../utils";
 import SavedNumbersContainer from "../savedNumbers/SavedNumbersContainer";
+import BasicButton from "../common/BasicButton/BasicButton";
 
 const NumbersContainer = () => {
   const [options, setOptions] = useState<OptionsState>({
@@ -148,7 +149,7 @@ const NumbersContainer = () => {
             options={randomizeOptions}
           />
         </div>
-        <button onClick={getNumbers}>Get Numbers</button>
+        <BasicButton onClick={getNumbers}>Get Numbers</BasicButton>
       </S.SelectionContainer>
       <div>
         {isLoading || isFetching ? (

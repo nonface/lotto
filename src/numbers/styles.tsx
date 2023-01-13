@@ -4,6 +4,7 @@ export const SelectionContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 25px;
+  align-items: center;
 
   > div {
     flex-grow: 1;
@@ -19,6 +20,7 @@ export const SelectionContainer = styled.div`
 export const NumbersContainer = styled.div`
   display: flex;
   gap: 10px;
+  align-items: center;
 
   span {
     display: block;

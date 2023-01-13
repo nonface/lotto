@@ -2,6 +2,7 @@ import * as S from "./styles";
 import {
   SavedState,
 } from "../types";
+import BasicButton from "../common/BasicButton/BasicButton";
 
 interface SavedNumbersContainerProps {
   savedNumbers: SavedState[] | undefined;
@@ -22,7 +23,7 @@ const SavedNumbersContainer = ({ savedNumbers, onRemoveClick }: SavedNumbersCont
                   {result.regular.map((number) => `${number} `)} - {result.special}
                   <span>({result.game}, last {result.limit} draws, {result.tier})</span>
                 </div>
-                <button onClick={() => onRemoveClick(result.dateAdded)}>Remove</button>
+                <BasicButton onClick={() => onRemoveClick(result.dateAdded)}>Remove</BasicButton>
               </li>
             );
           })}

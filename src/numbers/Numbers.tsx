@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import BasicButton from "../common/BasicButton/BasicButton";
 import { GameLabels, OptionsState, SaveNumbersArgs, SortedResults } from "../types";
 import { gameOptions, randomizeOptions } from "../utils";
 import * as S from "./styles";
@@ -60,7 +61,7 @@ const Numbers = ({
       <>
         {picks}
         <span className="special">{special}</span>
-        <button
+        <BasicButton
           onClick={() =>
             onSaveClick({
               regular: shuffledRegular,
@@ -76,7 +77,7 @@ const Numbers = ({
           }
         >
           Save
-        </button>
+        </BasicButton>
       </>
     </S.NumbersContainer>
   ) : (
