@@ -16,9 +16,11 @@ import {
 } from "../types";
 import {
   gameOptions,
+  getStorage,
   limitOptions,
   randomizeOptions,
-} from "../utils/SelectionOptions";
+  setStorage,
+} from "../utils";
 import SavedNumbersContainer from "../savedNumbers/SavedNumbersContainer";
 
 const NumbersContainer = () => {
@@ -28,7 +30,7 @@ const NumbersContainer = () => {
     randomize: 5,
   });
 
-  const [savedNumbers, setSavedNumbers] = useState<SavedState[]>();
+  const [savedNumbers, setSavedNumbers] = useState<SavedState[]>(() => getStorage('nf-lotto-saved-numbers'));
 
   const { limit, game } = options;
 
@@ -92,16 +94,26 @@ const NumbersContainer = () => {
     const date = new Date();
     const dateAdded = date.toISOString();
 
-    setSavedNumbers((prevState = []) => [
-      ...prevState,
-      { regular: array, special: special[0][0], tier, limit, game, dateAdded },
-    ]);
+    setSavedNumbers((prevState = []) => {
+      const newState = [
+        ...prevState,
+        { regular: array, special: special[0][0], tier, limit, game, dateAdded },
+      ];
+
+      setStorage('nf-lotto-saved-numbers', newState);
+
+      return newState;
+    });
   };
 
   const handleRemoveClick = (date: string) => {
-    setSavedNumbers((prevState = []) => (
-      prevState.filter(({ dateAdded }) => dateAdded !== date)
-    ));
+    setSavedNumbers((prevState = []) => {
+      const newState = prevState.filter(({ dateAdded }) => dateAdded !== date);
+
+      setStorage('nf-lotto-saved-numbers', newState);
+
+      return newState;
+    });
   };
 
   return (

@@ -18,8 +18,10 @@ const SavedNumbersContainer = ({ savedNumbers, onRemoveClick }: SavedNumbersCont
           {savedNumbers?.map((result) => {
             return (
               <li key={result.dateAdded}>
-                {result.regular.map((number) => `${number} `)} -{" "}
-                {result.special} ({result.game}, last {result.limit} draws, {result.tier})
+                <div>
+                  {result.regular.map((number) => `${number} `)} - {result.special}
+                  <span>({result.game}, last {result.limit} draws, {result.tier})</span>
+                </div>
                 <button onClick={() => onRemoveClick(result.dateAdded)}>Remove</button>
               </li>
             );

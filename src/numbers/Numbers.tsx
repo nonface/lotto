@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { GameLabels, OptionsState, SaveNumbersArgs, SortedResults } from "../types";
-import { gameOptions, randomizeOptions } from "../utils/SelectionOptions";
+import { gameOptions, randomizeOptions } from "../utils";
 import * as S from "./styles";
 
 const Numbers = ({
