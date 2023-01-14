@@ -24,6 +24,11 @@ import {
 import SavedNumbersContainer from "../savedNumbers/SavedNumbersContainer";
 import BasicButton from "../common/BasicButton/BasicButton";
 
+export interface Steps {
+  current: SavedState[] | null;
+  prev: {};
+}
+
 const NumbersContainer = () => {
   const [options, setOptions] = useState<OptionsState>({
     game: "powerball",
@@ -31,7 +36,7 @@ const NumbersContainer = () => {
     randomize: 5,
   });
 
-  const [savedNumbers, setSavedNumbers] = useState<SavedState[]>(() => getStorage('nf-lotto-saved-numbers'));
+  const [savedNumbers, setSavedNumbers] = useState<Steps>(() => getStorage('nf-lotto-saved-numbers'));
 
   const { limit, game } = options;
 
@@ -95,11 +100,14 @@ const NumbersContainer = () => {
     const date = new Date();
     const dateAdded = date.toISOString();
 
-    setSavedNumbers((prevState = []) => {
-      const newState = [
-        ...prevState,
-        { regular: array, special: special[0][0], tier, limit, game, dateAdded },
-      ];
+    setSavedNumbers(prevState => {
+      const newState = {
+        prev: {...prevState},
+        current: [
+          ...prevState.current || [],
+          { regular: array, special: special[0][0], tier, limit, game, dateAdded },
+        ]
+      };
 
       setStorage('nf-lotto-saved-numbers', newState);
 
@@ -108,14 +116,24 @@ const NumbersContainer = () => {
   };
 
   const handleRemoveClick = (date: string) => {
-    setSavedNumbers((prevState = []) => {
-      const newState = prevState.filter(({ dateAdded }) => dateAdded !== date);
+    setSavedNumbers(prevState => {
+      const newState = {
+        prev: {...prevState},
+        current: (prevState.current || []).filter(({ dateAdded }) => dateAdded !== date),
+      };
 
       setStorage('nf-lotto-saved-numbers', newState);
 
       return newState;
     });
   };
+
+  const handleUndoClick = () => {
+    setSavedNumbers(({ prev }) => {
+      setStorage('nf-lotto-saved-numbers', prev);
+      return prev as Steps;
+    });
+  }
 
   return (
     <div>
@@ -164,7 +182,7 @@ const NumbersContainer = () => {
           />
         )}
       </div>
-      <SavedNumbersContainer savedNumbers={savedNumbers} onRemoveClick={handleRemoveClick} />
+      <SavedNumbersContainer savedNumbers={savedNumbers} onRemoveClick={handleRemoveClick} onUndoCLick={handleUndoClick} />
     </div>
   );
 };

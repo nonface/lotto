@@ -14,4 +14,14 @@ export const BasicButton = styled.button`
     filter: brightness(90%);
     cursor: pointer;
   }
+
+  &.link {
+    background: none;
+    color: dodgerblue;
+    padding: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
